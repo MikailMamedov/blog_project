@@ -6,6 +6,6 @@
     <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
 
-    <a href="{% url 'logout' %}" class="btn btn-danger mt-3">Logout</a>
+    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#logoutModal">Logout</a>
 </div>
 {% endblock %}
