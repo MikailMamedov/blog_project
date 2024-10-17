@@ -28,8 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = 'index'  # Замените 'home' на ваш URL
-LOGOUT_REDIRECT_URL = 'index'  # Замените 'home' на ваш URL
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 
 
 # Application definition
