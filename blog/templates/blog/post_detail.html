@@ -1,13 +1,36 @@
 {% extends 'blog/index.html' %}
-{% block content %}
 
-<div class="card" style="width: 18rem;">
+{% block content %}
+    <div class="card" style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">{{ post.title }}</h5>
-          <p class="card-text">{{ post.content }}</p>
-          <p>by {{ post.author }}</p>
-          <p>Published on {{ post.created_at }}</p>
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content }}</p>
+            <p>by {{ post.author }}</p>
+            <p>Published on {{ post.created_at }}</p>
         </div>
     </div>
-    
+
+    <hr>
+
+    <!-- Комментарии -->
+    <h2>Comments</h2>
+    {% for comment in comments %}
+        <div class="comment">
+            <p><strong>{{ comment.user.username }}</strong>: {{ comment.text }}</p>
+            <small>{{ comment.created_at }}</small>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+
+    <hr>
+
+    <!-- Форма для добавления комментария -->
+    <h3>Add a comment</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Post Comment</button>
+    </form>
 {% endblock %}

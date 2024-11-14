@@ -37,6 +37,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
     'accounts',
+    'rest_framework',
     'blog',
     'bootstrap5',
     'django.contrib.admin',

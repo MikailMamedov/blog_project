@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login
-from .forms import CustomUserCreationForm
-from django.contrib.auth.models import User
+from .forms import CustomUserCreationForm, CommentForm
 from django.contrib import messages
+from .models import Comment
+from blog.models import Post
 
 def register(request):
     if request.method == 'POST':
@@ -21,6 +22,19 @@ def register(request):
 def profile(request):
     return render(request, 'accounts/profile.html')
 
+# Страница с постом и комментариями
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)  # Получаем пост по id
+    comments = post.accounts_comments.all()  # Получаем все комментарии для этого поста
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post  # Привязываем комментарий к посту
+            comment.user = request.user  # Устанавливаем текущего пользователя как автора
+            comment.save()
+            return redirect('post_detail', post_id=post.id)  # Перенаправляем на страницу этого поста
+    else:
+        form = CommentForm()
 
-
-
+    return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments, 'form': form})
