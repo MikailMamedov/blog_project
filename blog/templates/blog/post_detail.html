@@ -1,4 +1,53 @@
 {% extends 'blog/index.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Пост -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title text-primary">{{ post.title }}</h2>
+            <p class="card-text">{{ post.content }}</p>
+            <p class="text-muted mb-0"><strong>Автор:</strong> {{ post.author }}</p>
+            <p class="text-muted"><strong>Опубликовано:</strong> {{ post.created_at|date:"d M Y, H:i" }}</p>
+        </div>
+    </div>
+
+    <!-- Комментарии -->
+    <div class="comments-section mt-4">
+        <h3 class="mb-4">Комментарии</h3>
+        {% for comment in comments %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <p><strong>{{ comment.user.username }}</strong>: {{ comment.text }}</p>
+                <small class="text-muted">{{ comment.created_at|date:"d M Y, H:i" }}</small>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted">Пока нет комментариев. Будьте первым!</p>
+        {% endfor %}
+    </div>
+
+    <!-- Добавить комментарий -->
+    <div class="add-comment-section mt-5">
+        <h4 class="mb-3">Добавить комментарий</h4>
+        <form method="post" class="p-4 border rounded shadow-sm">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                {{ form.text.label_tag }}
+                {{ form.text|add_class:"form-control" }}
+                {% for error in form.text.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Отправить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+{% comment %} {% extends 'blog/index.html' %}
 
 {% block content %}
     <div class="card" style="width: 18rem;">
@@ -12,7 +61,6 @@
 
     <hr>
 
-    <!-- Комментарии -->
     <h2>Comments</h2>
     {% for comment in comments %}
         <div class="comment">
@@ -26,11 +74,11 @@
 
     <hr>
 
-    <!-- Форма для добавления комментария -->
     <h3>Add a comment</h3>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Post Comment</button>
     </form>
-{% endblock %}
+{% endblock %} 
+ {% endcomment %}

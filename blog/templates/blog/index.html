@@ -11,23 +11,28 @@
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
-  <style>
+<style>
     html, body {
-      overflow: hidden;
-  }
-  </style>
+        height: 100%;
+        overflow-y: auto; /* Убедись, что прокрутка включена */
+    }
+    .navbar .nav-link, nav a{
+        color: white !important;
+    }
+    
+      
+</style>
+
 </head>
 <body class="d-flex flex-column min-vh-100">
-  <!-- Контейнер для контента -->
-  <main class="flex-grow-1">
-      <!-- NAVBAR -->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand ms-3" href="{% url 'index' %}">My Blog</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav ms-auto"> 
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-dark shadow-sm text-white">
+        <a class="navbar-brand ms-3" href="{% url 'index' %}">My Blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
                   <li class="nav-item active">
                       <a class="nav-link" href="{% url 'index' %}">Home</a>
                   </li>
@@ -56,7 +61,8 @@
               </ul>
           </div>
       </nav>
-
+  <!-- Контейнер для контента -->
+  <main class="container my-4 flex-grow-1">
       {% block content %}
           <ul>
               {% for post in posts %}
@@ -70,8 +76,8 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="bg-light text-center text-lg-start mt-auto">
-      <div class="container p-4">
+  <footer class="bg-light text-center text-lg-start mt-auto border-top">
+    <div class="container p-4">
         <div class="row">
             <div class="col-lg-5 col-md-12 mb-4 mb-md-0">
                 <h5 class="text-uppercase">Контакты</h5>
@@ -98,9 +104,9 @@
             </div>
         </div>
       </div>
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-          © 2024 My Blog: <a class="text-dark" href="#">example.com</a>
-      </div>
+      <div class="text-center p-3 bg-dark text-white">
+        © 2024 My Blog: <a class="text-white" href="#">example.com</a>
+    </div>
   </footer>
 
   <!-- Logout Modal -->

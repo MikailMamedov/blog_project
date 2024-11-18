@@ -7,5 +7,9 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('profile/', views.profile, name='profile'),
-    path('post/<int:post_id>/', views.post_detail, name='post_detail'),  # Страница поста и комментариев
+    path('post/<int:post_id>/', views.post_detail, name='post_detail'),  
+    # path('comments/<int:post_id>/', views.comment_list, name='comment_list'),
 ]
+
+
+

@@ -1,23 +1,38 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm, CommentForm
+from django.contrib.auth.forms import UserCreationForm 
 from django.contrib import messages
 from .models import Comment
 from blog.models import Post
+
+# def register(request):
+#     if request.method == 'POST':
+#         form = CustomUserCreationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request, user)
+#             messages.success(request, 'Registration successful.')
+#             return redirect('index')
+#         else:
+#             messages.error(request, 'Registration failed. Please correct the errors.')
+#     else:
+#         form = CustomUserCreationForm()
+#     return render(request, 'accounts/register.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Registration successful.')
-            return redirect('index')
+            form.save()
+            messages.success(request, 'Вы успешно зарегистрировались! Теперь вы можете войти.')
+            return redirect('login')
         else:
-            messages.error(request, 'Registration failed. Please correct the errors.')
+            messages.error(request, 'Пожалуйста, исправьте ошибки ниже.')
     else:
         form = CustomUserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
+
 
 def profile(request):
     return render(request, 'accounts/profile.html')
