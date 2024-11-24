@@ -4,8 +4,8 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <h2 class="my-4">Login</h2>
-        <form method="POST">
+        <h2 class="my-4" >Login</h2>
+        <form method="POST" class="p-4 border rounded-3 shadow-sm bg-light">
             {% csrf_token %}
             <div class="form-group">
                 {{ form.username.label_tag }}
@@ -17,7 +17,7 @@
             </div>
             <button type="submit" class="btn btn-primary mt-3">Login</button>
         </form>
-        <a class="nav-link" href="{% url 'register' %}">Have not account? Sign up!</a>
+        <a href="{% url 'register' %}" class="text-decoration-none">Don't have an account? Sign up!</a>
     </div>
 </div>
 {% endblock %}

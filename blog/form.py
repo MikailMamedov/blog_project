@@ -1,7 +1,15 @@
+# from django import forms
+# from .models import Post
+
+# class PostForm(forms.ModelForm):
+#     class Meta:
+#         model = Post
+#         fields = ['title', 'content'] 
+
 from django import forms
 from .models import Post
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content']  # Укажи поля, которые будут в форме
+        fields = ['title', 'content', 'image'] 
