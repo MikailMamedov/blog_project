@@ -6,6 +6,10 @@
     <!-- Пост -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
+            <!-- Изображение поста -->
+            {% if post.get_image_url %}
+            <img src="{{ post.get_image_url }}" alt="Изображение поста" class="card-img-top mb-3" style="max-height: 400px; object-fit: cover;">
+            {% endif %}
             <h2 class="card-title text-primary">{{ post.title }}</h2>
             <p class="card-text">{{ post.content }}</p>
             <p class="text-muted mb-0"><strong>Автор:</strong> {{ post.author }}</p>
@@ -45,40 +49,3 @@
     </div>
 </div>
 {% endblock %}
-
-
-{% comment %} {% extends 'blog/index.html' %}
-
-{% block content %}
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">{{ post.content }}</p>
-            <p>by {{ post.author }}</p>
-            <p>Published on {{ post.created_at }}</p>
-        </div>
-    </div>
-
-    <hr>
-
-    <h2>Comments</h2>
-    {% for comment in comments %}
-        <div class="comment">
-            <p><strong>{{ comment.user.username }}</strong>: {{ comment.text }}</p>
-            <small>{{ comment.created_at }}</small>
-        </div>
-        <hr>
-    {% empty %}
-        <p>No comments yet.</p>
-    {% endfor %}
-
-    <hr>
-
-    <h3>Add a comment</h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Post Comment</button>
-    </form>
-{% endblock %} 
- {% endcomment %}

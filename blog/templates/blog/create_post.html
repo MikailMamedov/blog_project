@@ -2,9 +2,9 @@
 {% load widget_tweaks %}
 {% block content %}
 
-<div class="container ">
+<div class="container">
     <h2 class="text-center mb-4">Create a new post</h2>
-    <form method="post" class="p-4 border rounded shadow-sm bg-light">
+    <form method="post" class="p-4 border rounded shadow-sm bg-light" enctype="multipart/form-data">
         {% csrf_token %}
         
         <div class="form-group mb-3">
@@ -22,7 +22,16 @@
                 <small class="text-danger">{{ error }}</small>
             {% endfor %}
         </div>
-        
+
+        <!-- Поле для изображения -->
+        <div class="form-group mb-3">
+            {{ form.image.label_tag }}
+            {{ form.image|add_class:"form-control" }}
+            {% for error in form.image.errors %}
+                <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+        </div>
+
         <button type="submit" class="btn btn-primary w-100">Publish</button>
     </form>
 </div>
