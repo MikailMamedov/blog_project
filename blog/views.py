@@ -21,14 +21,7 @@ def create_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            if not post.image:  
-                random_images = [
-                    'static/random_images/img1.jpg',
-                    'static/random_images/img2.jpg',
-                    'static/random_images/img3.jpg',
-                ]
-                post.image.name = random.choice(random_images)  # Указываем имя файла
-            post.save()
+            post.save()  # Метод save сам позаботится о случайной картинке
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()

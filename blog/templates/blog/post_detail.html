@@ -8,7 +8,7 @@
         <div class="card-body">
             <!-- Изображение поста -->
             {% if post.get_image_url %}
-            <img src="{{ post.get_image_url }}" alt="Изображение поста" class="card-img-top mb-3" style="max-height: 400px; object-fit: cover;">
+            <img src="{{ post.get_image_url }}" class="card-img-top" alt="{{ post.title }}" class="card-img-top mb-3" style="max-height: 400px; object-fit: cover;">
             {% endif %}
             <h2 class="card-title text-primary">{{ post.title }}</h2>
             <p class="card-text">{{ post.content }}</p>
