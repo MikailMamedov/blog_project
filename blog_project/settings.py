@@ -34,10 +34,23 @@ LOGOUT_REDIRECT_URL = '/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.facebook.FacebookOAuth2',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend', 
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<Google Client ID>'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<Google Client Secret>'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'social_django',
     'accounts',
     'rest_framework',
     'blog',

@@ -18,6 +18,7 @@
             <button type="submit" class="btn btn-primary mt-3">Login</button>
         </form>
         <a href="{% url 'register' %}" class="text-decoration-none">Don't have an account? Sign up!</a>
+        {% comment %} <a href="{% url 'social:begin' 'google-oauth2' %}">Войти через Google</a> {% endcomment %}
     </div>
 </div>
 {% endblock %}

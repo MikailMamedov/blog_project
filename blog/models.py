@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 import random
 from django.core.files.base import File
 import os
+from django.conf import settings 
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
@@ -13,25 +14,21 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post_images/', null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        print("Метод save вызван")  # Проверим, вызывается ли метод save
-
         if not self.image:  # Если изображения нет
-            print("Поле image пустое, выбираем случайное изображение")  # Проверим, пустое ли поле image
             random_images = [
-                '/media/post_images/img1.jpg',
-                '/media/post_images/img2.jpg',
-                '/media/post_images/img3.jpg',
+                'post_images/img1.jpg',
+                'post_images/img2.jpg',
+                'post_images/img3.jpg',
             ]
             random_image_path = random.choice(random_images)
-            absolute_path = os.path.join(os.getcwd(), 'media', random_image_path)
-            print(f"Выбрана случайная картинка: {absolute_path}")  # Проверим путь случайного изображения
+            absolute_path = os.path.join(settings.MEDIA_ROOT, random_image_path)
 
-            try:
+            if os.path.exists(absolute_path):  # Проверяем, что файл существует
                 with open(absolute_path, 'rb') as f:
                     self.image.save(os.path.basename(random_image_path), File(f), save=False)
-                    print(f"Картинка {random_image_path} сохранена в поле image")  # Проверим успешное сохранение
-            except FileNotFoundError:
+            else:
                 print(f"Ошибка: файл {absolute_path} не найден.")
+        
         super().save(*args, **kwargs)
         
     def get_image_url(self):

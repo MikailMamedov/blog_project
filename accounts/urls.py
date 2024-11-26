@@ -8,7 +8,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('profile/', views.profile, name='profile'),
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),  
-    # path('comments/<int:post_id>/', views.comment_list, name='comment_list'),
 ]
 
 
