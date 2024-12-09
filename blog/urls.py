@@ -11,6 +11,7 @@ urlpatterns = [
     path('create_post/', create_post, name='create_post'),
     path('accounts/', include('accounts.urls')),
     path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path('search/', views.search, name='search'),
 ]
 
 if settings.DEBUG:  # Добавляем обработку медиафайлов в конце

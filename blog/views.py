@@ -26,3 +26,12 @@ def create_post(request):
     else:
         form = PostForm()
     return render(request, 'blog/create_post.html', {'form': form})
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        results = Post.objects.filter(title__icontains=query)
+    else:
+        results = Post.objects.all()
+
+    return render(request, 'blog/search_results.html', {'posts': results})

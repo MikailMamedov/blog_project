@@ -19,6 +19,7 @@ class Post(models.Model):
                 'post_images/img1.jpg',
                 'post_images/img2.jpg',
                 'post_images/img3.jpg',
+                'post_images/default.png',
             ]
             random_image_path = random.choice(random_images)
             absolute_path = os.path.join(settings.MEDIA_ROOT, random_image_path)
