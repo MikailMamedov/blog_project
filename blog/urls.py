@@ -12,6 +12,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('accounts/logout/', LogoutView.as_view(), name='logout'),
     path('search/', views.search, name='search'),
+    path('post/<int:pk>/edit/', views.edit_post, name='edit_post'),
 ]
 
 if settings.DEBUG:  # Добавляем обработку медиафайлов в конце
