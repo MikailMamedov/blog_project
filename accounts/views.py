@@ -68,3 +68,12 @@ def profile(request, username):
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=user)
     return render(request, 'accounts/profile.html', {'user': user, 'posts': posts})
+
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    
+    if post.author == request.user:
+        post.delete()
+        return redirect('profile', username=request.user.username)
+    else:
+        return redirect('index')

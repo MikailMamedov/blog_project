@@ -1,13 +1,25 @@
 {% extends 'blog/index.html' %}
+{% load custom_filters %}
 
 {% block content %}
 <main class="container my-4">
-    <h2>Редактировать пост</h2>
-    <form method="post" enctype="multipart/form-data">
+    <h2 class="mb-4 text-center">Редактировать пост</h2>
+    <form method="post" enctype="multipart/form-data" class="border p-4 shadow-sm rounded bg-light">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        <div class="mb-3">
+            {{ form.title.label_tag }}
+            {{ form.title|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            {{ form.content.label_tag }}
+            {{ form.content|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            {{ form.image.label_tag }}
+            {{ form.image|add_class:"form-control" }}
+        </div>
+        <button type="submit" class="btn btn-primary">💾 Сохранить изменения</button>
+        <a href="{% url 'post_detail' post.pk %}" class="btn btn-secondary ms-2">❌ Отменить</a>
     </form>
-    <a href="{% url 'post_detail' post.pk %}" class="btn btn-secondary mt-2">Отменить</a>
 </main>
 {% endblock %}
