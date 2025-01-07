@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 import random
+from django.http import HttpResponseForbidden
 
 def post_list(request):
     posts = Post.objects.all()
@@ -33,5 +34,21 @@ def search(request):
         results = Post.objects.filter(title__icontains=query)
     else:
         results = Post.objects.all()
-
     return render(request, 'blog/search_results.html', {'posts': results})
+
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if post.author != request.user:
+        return redirect('index')
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', post_id=post.id)
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, 'blog/edit_post.html', {'form': form, 'post': post})
+

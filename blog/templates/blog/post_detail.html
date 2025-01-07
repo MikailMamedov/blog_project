@@ -14,6 +14,9 @@
             <p class="card-text">{{ post.content }}</p>
             <p class="text-muted mb-0"><strong>Автор:</strong> {{ post.author }}</p>
             <p class="text-muted"><strong>Опубликовано:</strong> {{ post.created_at|date:"d M Y, H:i" }}</p>
+            {% if user.is_authenticated and post.author == user %}
+                <a href="{% url 'edit_post' post.pk %}" class="btn btn-warning">Редактировать</a>
+            {% endif %}
         </div>
     </div>
 

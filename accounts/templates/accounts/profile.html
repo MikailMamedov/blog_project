@@ -1,11 +1,43 @@
 {% extends 'blog/index.html' %}
 
 {% block content %}
-<div class="container mt-4">
+<main class="container my-4">
     <h2>Профиль пользователя</h2>
     <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
 
-    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#logoutModal">Logout</a>
-</div>
+    <h3 class="mt-4">Посты:</h3>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 d-flex flex-column justify-content-between">
+                {% if post.get_image_url %}
+                <img src="{{ post.get_image_url }}" class="card-img-top" alt="{{ post.title }}" style="max-height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
+                            {{ post.title }}
+                        </a>
+                    </h5>
+                    <p class="card-text text-muted">Опубликован: {{ post.published_at|date:"d M Y" }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary btn-sm">👁️</a>
+                    <div>
+                        <a href="{% url 'edit_post' post.pk %}" class="btn btn-warning btn-sm" title="Редактировать">
+                            ✏️
+                        </a>
+                        <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger btn-sm" title="Удалить" onclick="return confirm('Вы уверены, что хотите удалить этот пост?');">
+                            🗑️
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Постов пока нет.</p>
+        {% endfor %}
+    </div>
+</main>
 {% endblock %}
