@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-magdx*b&d670za%-wqi@2=!$8j=mzia^pv)@%sv(lu9($lfn8k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -105,17 +105,17 @@ WSGI_APPLICATION = 'blog_project.wsgi.application'
 #     }
 # }
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django',
-        'USER': 'django_admin',
-        'PASSWORD': '8975miki',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': 'django',  # Имя базы данных
+        'USER': 'django_admin',     # Имя пользователя
+        'PASSWORD': '89miki75',  # Пароль пользователя
+        'HOST': 'localhost',     # Хост
+        'PORT': '5432',          # Порт
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -155,7 +155,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
