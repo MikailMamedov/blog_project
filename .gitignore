@@ -1,5 +1,41 @@
-__pycache__/
+# Python bytecode
 *.pyc
-**/__pycache__/
+*.pyo
+__pycache__/
+
+# Директория виртуального окружения
 venv/
 myworld/
+
+# Файлы настроек IDE (например, PyCharm, VSCode, Sublime Text и др.)
+.vscode/
+
+# Лог файлы
+*.log
+
+# SQLite базы данных (если используешь SQLite)
+db.sqlite3
+
+# Системные файлы (например, Mac OS X или Windows)
+.DS_Store
+Thumbs.db
+
+# Файлы конфигурации контейнеров
+docker-compose.override.yml
+
+# Папки с результатами тестирования
+coverage/
+*.cover
+nosetests.xml
+test_*.xml
+
+# Файлы конфигурации для Git LFS (если используешь)
+*.gitattributes
+
+# Файлы конфигурации для пакетов (например, pip)
+Pipfile.lock
+poetry.lock
+
+# Статические и медиа файлы, если они не нужны в репозитории
+/static/
+/media/
