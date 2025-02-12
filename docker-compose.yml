@@ -1,0 +1,21 @@
+services:
+  web:
+    env_file:
+        - .env
+    environment:
+        - SECRET_KEY=${SECRET_KEY}
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: django
+      POSTGRES_USER: django_admin
+      POSTGRES_PASSWORD: 89miki75
+    ports:
+      - "5432:5432"
