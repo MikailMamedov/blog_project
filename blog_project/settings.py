@@ -53,11 +53,11 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', 
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<Google Client ID>'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<Google Client Secret>'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 
 # Application definition
 
@@ -85,6 +85,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+MIDDLEWARE += [
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+]
+
+LOGIN_URL = 'login'  # или твой url для логина
+LOGIN_REDIRECT_URL = '/'  # куда редирект после логина
+LOGOUT_REDIRECT_URL = '/'  # куда после логаута
 
 ROOT_URLCONF = 'blog_project.urls'
 
