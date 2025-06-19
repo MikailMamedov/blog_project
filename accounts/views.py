@@ -32,17 +32,26 @@ def post_list(request):
     return render(request, 'blog/index.html', {'posts': posts})
 
 def register(request):
+    next_url = request.GET.get('next', '/')
+
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Вы успешно зарегистрировались! Теперь вы можете войти.')
-            return redirect('login')
+            user = form.save()
+            user.backend = 'django.contrib.auth.backends.ModelBackend'  # Явно указываем backend
+            login(request, user)
+            messages.success(request, 'Вы успешно зарегистрировались и вошли в систему!')
+            return redirect(next_url)
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки ниже.')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'accounts/register.html', {'form': form})
+
+    return render(request, 'accounts/register.html', {
+        'form': form,
+        'next': next_url,
+    })
+
 
 def profile(request):
     return render(request, 'accounts/profile.html')

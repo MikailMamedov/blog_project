@@ -47,29 +47,29 @@
                 <div class="mt-3 text-center">
                     <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
                 </div>
+                <input type="hidden" name="next" value="{{ next|default:'/' }}">
+
             </form>
 
             <div class="text-center mt-4">
                 <p>Or sign up using:</p>
-                {% comment %} <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Войти через Google</a> {% endcomment %}
-                <a class="btn btn-outline-dark me-2" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">
-                    <i class="bi bi-google"></i> Google
+
+                <!-- Google -->
+                <a href="{% url 'social:begin' 'google-oauth2' %}?next=/" class="btn btn-outline-danger w-100 my-2">
+                    <i class="fab fa-google me-2"></i> Sign up with Google
                 </a>
-                <a class="btn btn-outline-primary me-2" href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
-                    <i class="bi bi-facebook"></i> Facebook
+
+                <!-- Facebook -->
+                <a href="{% url 'social:begin' 'facebook' %}?next=/" class="btn btn-outline-primary w-100 my-2">
+                    <i class="fab fa-facebook-f me-2"></i> Sign up with Facebook
                 </a>
-                <a class="btn btn-outline-info" href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">
-                    <i class="bi bi-twitter"></i> Twitter
+
+                <!-- Twitter -->
+                <a href="{% url 'social:begin' 'twitter' %}?next=/" class="btn btn-outline-info w-100 my-2">
+                    <i class="fab fa-twitter me-2"></i> Sign up with Twitter
                 </a>
             </div>
 
-            
-            <!-- Login Redirect -->
-            <div class="mt-3 ">
-                <a href="{% url 'login' %}" class="text-decoration-none">Already have an account? Login!</a>
-            </div>
-
-            
         </div>
     </div>
 </div>

@@ -16,6 +16,8 @@
                 {{ form.password|add_class:"form-control" }}
             </div>
             <button type="submit" class="btn btn-primary mt-3">Login</button>
+            <input type="hidden" name="next" value="{{ next|default:'/' }}">
+
         </form>
         <a href="{% url 'register' %}" class="text-decoration-none">Don't have an account? Sign up!</a>
         {% comment %} <a href="{% url 'social:begin' 'google-oauth2' %}">Войти через Google</a> {% endcomment %}
