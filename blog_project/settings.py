@@ -16,7 +16,9 @@ import environ
 # from dotenv import load_dotenv
 
 # Инициализация django-environ
-env = environ.Env()
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 environ.Env.read_env()
 
 SECRET_KEY = env('SECRET_KEY')
@@ -33,7 +35,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-magdx*b&d670za%-wqi@2=!$8j=mzia^pv)@%sv(lu9($lfn8k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', default=False)
+
 
 ALLOWED_HOSTS = ['*']  
 
@@ -127,8 +130,6 @@ WSGI_APPLICATION = 'blog_project.wsgi.application'
 # }
 
 
-DEBUG = env.bool("DEBUG", default=False)
-
 
 DATABASES = {
     'default': {
@@ -141,8 +142,9 @@ DATABASES = {
     }
 }
 
-print(env('DB_NAME'))
-print(env('DB_USER'))
+# print(env('DB_NAME'))
+# print(env('DB_USER'))
+
 
 
 # Password validation
@@ -162,10 +164,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-)
 
 
 
