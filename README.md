@@ -1,6 +1,6 @@
 Blog Platform
 =============
-A Django-based blogging platform with user registration and social authentication via Google, Facebook, and Twitter.
+A Django-based blogging platform with user registration and social authentication via Google, Facebook, and Twitter. (The last two will be addes soon)
 
 Features
 --------
