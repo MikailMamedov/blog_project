@@ -89,4 +89,4 @@ Deployment
 
 Contact
 -------
-For questions or support, contact: mikail@example.com
+For questions or support, contact: mikail8975@gmail.com
