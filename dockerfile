@@ -21,6 +21,4 @@ RUN chmod +x /wait-for-db.sh
 
 # CMD ["/wait-for-db.sh", "db", "5432", "python", "manage.py", "runserver", "0.0.0.0:8000"]
 
-CMD gunicorn blog_project.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 60
-
-
+CMD sh -c "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn blog_project.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 60"
