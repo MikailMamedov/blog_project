@@ -13,11 +13,10 @@ SECRET_KEY = env('SECRET_KEY')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = env.bool('DJANGO_DEBUG', default=False)  # DEBUG=True для локалки
+DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
-# ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost"])
-# ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1", "::1"])
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(",")
+
 
 
 # Без жёстких ограничений безопасности для локалки:
