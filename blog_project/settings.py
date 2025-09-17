@@ -3,9 +3,13 @@ from pathlib import Path
 import environ
 
 env = environ.Env(
-    DEBUG=(bool, True)  # по умолчанию включаем DEBUG локально
+    DEBUG=(bool, False)  # по умолчанию включаем DEBUG локально
 )
 environ.Env.read_env()
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost"])
 
 SECRET_KEY = env('SECRET_KEY')
 
@@ -16,19 +20,27 @@ DEBUG = env.bool('DJANGO_DEBUG', default=False)  # DEBUG=True для локал�
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1", "::1"])
 
 # Без жёстких ограничений безопасности для локалки:
+# if not DEBUG:
+#     INTERNAL_IPS = ['127.0.0.1']
+#     SECURE_HSTS_SECONDS = 0
+#     SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+#     SECURE_HSTS_PRELOAD = False
+
+#     SECURE_CONTENT_TYPE_NOSNIFF = False
+#     SECURE_BROWSER_XSS_FILTER = False
+#     X_FRAME_OPTIONS = 'DENY'
+
+#     CSRF_COOKIE_SECURE = False
+#     SESSION_COOKIE_SECURE = False
+#     SECURE_SSL_REDIRECT = False
+
 if not DEBUG:
-    INTERNAL_IPS = ['127.0.0.1']
-    SECURE_HSTS_SECONDS = 0
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
-    SECURE_HSTS_PRELOAD = False
-
-    SECURE_CONTENT_TYPE_NOSNIFF = False
-    SECURE_BROWSER_XSS_FILTER = False
-    X_FRAME_OPTIONS = 'DENY'
-
-    CSRF_COOKIE_SECURE = False
-    SESSION_COOKIE_SECURE = False
-    SECURE_SSL_REDIRECT = False
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    # НЕ включаем SECURE_SSL_REDIRECT, Render сам терминирует TLS, нам достаточно SECURE_PROXY_SSL_HEADER
 
 
 LOGIN_REDIRECT_URL = '/'
@@ -68,6 +80,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "whitenoise.runserver_nostatic",
+    "django.contrib.staticfiles",
 ]
 
 MIDDLEWARE = [
@@ -78,7 +92,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',"django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 LOGIN_URL = 'login'
@@ -105,15 +120,36 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blog_project.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DB_NAME'),
+#         'USER': env('DB_USER'),
+#         'PASSWORD': env('DB_PASSWORD'),
+#         'HOST': env('DB_HOST'),
+#         'PORT': env('DB_PORT'),
+#     }
+# }
+
+
+# DATABASES = {
+#     "default": env.db(
+#         "DATABASE_URL",
+#         default=f"postgres://{env('DB_USER')}"
+#                 f":{env('DB_PASSWORD')}"
+#                 f"@{env('DB_HOST', default='localhost')}"
+#                 f":{env('DB_PORT', default='5432')}"
+#                 f"/{env('DB_NAME')}"
+#     )
+# }
+
+import dj_database_url
+import os
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL")
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -130,5 +166,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
